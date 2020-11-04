@@ -10,7 +10,12 @@ def getDeputies():
     return soup.find_all('li', {"class": "list-persons__item"})
 
 
-def transpateToEnglish(payload="q=Hello%2C%20world!&source=ru&target=en"):
+def translateToEnglish(payload):
+
+    if not payload:
+        raise TypeError(
+            "translateToEnglish: expected non empty string but got type: {}, length: {}".format(type(payload), str(len(payload))))
+
     url = "https://rapidapi.p.rapidapi.com/language/translate/v2"
 
     headers = {
@@ -27,6 +32,7 @@ def transpateToEnglish(payload="q=Hello%2C%20world!&source=ru&target=en"):
 
 def main():
     ebaniDeputi = getDeputies()
+    translateToEnglish("")
 
     for num, dep in enumerate(ebaniDeputi, start=1):
         aTag = dep.find('a', {"class": "person__title__link"})
